@@ -2,9 +2,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ToEatList</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpP8c2OG0753l41i26x35s_JepFAtMrM0" async defer></script>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>ToEatList</h1>
+        
+        <!-- 輸入框 -->
+        <input type="text" id="searchInput" placeholder="搜尋餐廳">
+        <button onclick="searchRestaurant()">搜尋</button>
+        
+        <!-- 餐廳列表 -->
+        <ul id="restaurantList">
+            <li>餐廳載入中...</li>
+        </ul>
+        
+        <!-- Google Map -->
+        <div id="map" style="height: 400px; width: 100%;"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

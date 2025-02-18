@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToEatList 地圖示範</title>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpP8c2OG0753l41i26x35s_JepFAtMrM0" async defer></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpP8c2OG0753l41i26x35s_JepFAtMrM0" async defer></script>
     <style>
         #map { height: 500px; width: 100%; }
@@ -30,19 +31,19 @@
                 center: taipei101,
             });
 
-            // 從後端獲取餐廳資料
-            fetch("http://127.0.0.1:8000/restaurants")  // 這裡呼叫 FastAPI 提供的 API
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(place => {
-                        new google.maps.Marker({
-                            position: { lat: place.lat, lng: place.lng },
-                            map: map,
-                            title: place.name,
-                        });
-                    });
-                })
-                .catch(error => console.error("載入餐廳失敗:", error));
+            // // 從後端獲取餐廳資料
+            // fetch("http://127.0.0.1:8000/restaurants")  // 這裡呼叫 FastAPI 提供的 API
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         data.forEach(place => {
+            //             new google.maps.Marker({
+            //                 position: { lat: place.lat, lng: place.lng },
+            //                 map: map,
+            //                 title: place.name,
+            //             });
+            //         });
+            //     })
+            //     .catch(error => console.error("載入餐廳失敗:", error));
         }
     </script>
 </body>
