@@ -1,7 +1,7 @@
 # ToEat List
 
 美食待吃清單:
-用ToDoList的形式，來記錄每一家能榮登你心目中的美食殿堂的待吃清單。
+用ToDoList的形式，來記錄每一間可能榮登你心目中的美食殿堂的餐廳。
 
 ### 目錄
 - [ToEat List](#toeat-list)
