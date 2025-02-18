@@ -1,3 +1,4 @@
+# 最最基本的fastapi範例來確定fastapi安裝成功
 from typing import Union
 
 from fastapi import FastAPI
