@@ -1,39 +1,3 @@
-# class Solution:
-#     def split(self, s: str):
-#         result = [ [s] ]
-#         n = len(s)
-
-#         # 外層迴圈，表示開始位置
-#         for i in range(1, n):  # i 為拆分位置的起始索引
-#             # 內層迴圈，從 i 開始繼續拆分
-#             for j in range(i + 1, n + 1):  # j 表示拆分的結束位置
-#                 # 將拆分出來的部分添加到結果中
-#                 part = [s[:i]] + [s[i:j]] + [s[j:]]  # 拆成兩部分，並加上剩下部分
-#                 result.append(part)
-
-#         return result
-    
-#     def test(self, n):
-#         arr = self.split(str(n*n))
-#         print("arr", arr)
-#         for a in arr:
-#             # print("a", a)
-#             temp_sum = 0
-#             for item in a:
-#                 if len(item) > 0:
-#                     temp_sum += int(item)
-#             print("a", a, "temp_sum", temp_sum)
-#             if temp_sum == n:
-#                 return True
-#         return False
-
-
-# # 測試程式
-# solution = Solution()
-# print(solution.test(11))
-
-
-
 
 
 # from fastapi import FastAPI, HTTPException
@@ -81,3 +45,4 @@
 #     global todo_list
 #     todo_list = [todo for todo in todo_list if todo.id != todo_id]
 #     return {"message": f"已刪除 ID {todo_id}"}
+

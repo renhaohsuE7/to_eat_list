@@ -1,22 +1,15 @@
-from sqlmodel import SQLModel, Field, create_engine, Session
+from sqlmodel import SQLModel, Field
 from typing import Optional
-
-# SQLite 資料庫
-DATABASE_URL = "sqlite:///./toeatlist.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+# from pydantic import BaseModel, conbool
 
 # 定義餐廳模型
 class Restaurant(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     address: str
-    visited: bool = Field(default=False)
+    visited: bool = Field(default=False)  # 是否已經吃過
 
-# 建立資料表
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
-
-# 取得資料庫 Session
-def get_session():
-    with Session(engine) as session:
-        yield session
+# 更新 "有沒有吃過這間餐廳"
+class UpdateRestaurantRequest(SQLModel):
+    # visited: bool
+    visited: bool = Field(default=False)  # 是否已經吃過
