@@ -1,16 +1,51 @@
-# to_eat_list
+# ToEat List
 
-ToEat List
-美食待吃清單
+美食待吃清單:
+用ToDoList的形式，來記錄每一家能榮登你心目中的美食殿堂的待吃清單。
 
-後端API: 
-RestFul 該有的CRUD們
-![APIs](image.png)
+### 目錄
+- [ToEat List](#toeat-list)
+    - [目錄](#目錄)
+  - [後端API說明](#後端api說明)
+      - [遵守Restful api形式](#遵守restful-api形式)
+      - [暫時是盡可能以MVC概念來開發](#暫時是盡可能以mvc概念來開發)
+      - [以不同服務的範疇(Domain)來分類](#以不同服務的範疇domain來分類)
+    - [簡易效果顯示(前端)](#簡易效果顯示前端)
+  - [API功能說明](#api功能說明)
+    - [Restaurants 相關功能](#restaurants-相關功能)
+    - [Google Maps 相關功能](#google-maps-相關功能)
+  - [Installation:](#installation)
+  - [簡易效果顯示(前端)](#簡易效果顯示前端-1)
+  
+
+## 後端API說明
+
+此Repo的開發會盡可能的符合以下概念
+
+#### 遵守Restful api形式 
+- [x] 已實作必要的CRUD們
+
+#### 暫時是盡可能以MVC概念來開發 
+-  [x] Model: ./models
+- [ ] View: frontend資料夾下的基本展示 (待完善)
+-  [x] Controller: main.py
+
+#### 以不同服務的範疇(Domain)來分類
+- [x] routers: API們
+   - [x] restaurant: 餐廳相關的CRUD
+   - [x] googlemaps_router: CRUD且以goolemap功能被分類到此處 (例如前端要get地圖Key)
+- [x] services: 
+    輔助CRUD的功能們，例如第三方服務存取
+- [ ] test: 
+    尚未實作 
+
+
+![APIs](./assets/image.png)
 
 > 註: 使用了google的第三方服務google map，為求開發上的便利而拆分出來
 
-簡易效果顯示(前端)
-![alt text](image-2.png)
+### 簡易效果顯示(前端)
+![alt text](./assets/image-2.png)
 
 
 ## API功能說明
@@ -74,7 +109,7 @@ fastapi dev main.py
 ```
 
 
-#### 前端簡易展示
+## 簡易效果顯示(前端)
 
 最輕鬆的方式是使用vscode的擴充元件LiveServer
 在 frontend/index.html 右鍵open with liveserver
