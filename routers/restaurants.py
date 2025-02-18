@@ -4,8 +4,8 @@ from sqlmodel import Session, select
 
 # 這個Repo裡寫的東西們
 from database import get_session
-from models import Restaurant, UpdateRestaurantRequest
-from services.google_maps import search_nearby_restaurants, get_restaurant_info, get_restaurant_by_name
+from models import Restaurant, UpdateRestaurantRequest, RestaurantCreateRequest
+from services.google_maps import search_nearby_restaurants, get_restaurant_info, get_restaurant_by_name, search_restaurant_by_google
 
 router = APIRouter()
 
@@ -26,11 +26,25 @@ def get_restaurants(
     return results
 
 
-# 使用googlemaps 透過店名搜尋餐廳，並返回搜尋結果
-@router.get("/find")
+# # 使用googlemaps 透過店名搜尋餐廳，並返回搜尋結果
+# @router.get("/find")
+# def search_restaurant_by_name(query: str = Query(..., description="餐廳名稱")):
+#     # 如果前端只要一間餐廳
+#     # result = get_restaurant_by_name(query)
+#     # return result
+
+#     # 搜尋餐廳，並返回一個包含餐廳資料的陣列# 使用餐廳名稱查詢多家餐廳
+#     restaurants = session.query(Restaurant).filter(Restaurant.name.ilike(f"%{query}%")).all()
+
+#     if restaurants:
+#         return restaurants  # 返回多家餐廳資料的陣列
+#     else:
+#         raise HTTPException(status_code=404, detail="餐廳未找到")
+# 搜尋餐廳路由
+@router.get("/find", response_model=list[Restaurant])
 def search_restaurant_by_name(query: str = Query(..., description="餐廳名稱")):
-    result = get_restaurant_by_name(query)
-    return result
+    return search_restaurant_by_google(query)
+
 
 # 使用googlemaps 根據經緯度搜尋附近的餐廳   (lng:經度 lat:緯度)
 @router.get("/search")
@@ -66,28 +80,29 @@ def restaurant_details(place_id: str):
 
 # 新增餐廳到 ToEatList
 @router.post("/add")
-def add_restaurant(place_id: str, session: Session = Depends(get_session)):
+def add_restaurant(
+    request: RestaurantCreateRequest,  # 透過 Pydantic 解析 JSON
+    session: Session = Depends(get_session)
+):
+    place_id = request.place_id  # 從 JSON 取得 place_id
+    
     # 使用 place_id 透過 Google Maps API 查詢餐廳詳細資料
     details = restaurant_details(place_id)
     if "error" in details:
         raise HTTPException(status_code=400, detail="無效的餐廳資訊")
 
     # 檢查資料庫是否已有相同的餐廳
-    existing_restaurant = session.query(Restaurant).filter(Restaurant.name == details["name"]).first()
+    existing_restaurant = session.query(Restaurant).filter(Restaurant.place_id == place_id).first()
     if existing_restaurant:
         raise HTTPException(status_code=400, detail="餐廳已存在於清單中")
-
-    # 確保經緯度資料存在
-    if "latitude" not in details or "longitude" not in details:
-        raise HTTPException(status_code=400, detail="餐廳缺少經緯度資訊")
 
     # 新增餐廳
     new_restaurant = Restaurant(
         name=details["name"],
         address=details["address"],
-        latitude=details["latitude"],  # 緯度
-        longitude=details["longitude"],  # 經度
-        place_id=place_id,
+        latitude=details["latitude"],
+        longitude=details["longitude"],
+        place_id=place_id,  # 存入 place_id
         visited=False  # 預設狀態為尚未吃過
     )
 
@@ -95,7 +110,6 @@ def add_restaurant(place_id: str, session: Session = Depends(get_session)):
     session.commit()
 
     return {"message": "餐廳已成功加入", "restaurant": details}
-
 
 
 # 根據 ID 查詢餐廳

@@ -17,3 +17,7 @@ class Restaurant(SQLModel, table=True):
 class UpdateRestaurantRequest(SQLModel):
     # visited: bool
     visited: bool = Field(default=False)  # 是否已經吃過
+
+# 只是讓前端傳遞 place_id
+class RestaurantCreateRequest(SQLModel):
+    place_id: str

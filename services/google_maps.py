@@ -1,6 +1,9 @@
 import googlemaps
+from fastapi import HTTPException
 from typing import List, Dict
 from config import settings
+
+from models import Restaurant
 
 gmaps = googlemaps.Client(key=settings.google_maps_api_key)
 
@@ -66,3 +69,27 @@ def get_restaurant_by_name(query: str) -> Dict:
         }
     else:
         return {"error": "找不到符合的餐廳"}
+
+
+
+# 使用 Google Maps Places API 搜尋餐廳
+def search_restaurant_by_google(query: str) -> List[Restaurant]:
+    # 使用 Google Maps Places API 進行文字搜尋
+    places_result = gmaps.places(query + " restaurant", language='zh-TW')  # 這會搜尋包含 'restaurant' 關鍵字的地方
+
+    if 'results' not in places_result:
+        raise HTTPException(status_code=404, detail="未找到相關餐廳")
+
+    # 把搜尋結果轉換成餐廳模型的列表
+    restaurants = []
+    for place in places_result['results']:
+        restaurant = Restaurant(
+            name=place['name'],
+            address=place.get('formatted_address', 'N/A'),
+            latitude=place['geometry']['location']['lat'],
+            longitude=place['geometry']['location']['lng'],
+            place_id=place['place_id']
+        )
+        restaurants.append(restaurant)
+
+    return restaurants

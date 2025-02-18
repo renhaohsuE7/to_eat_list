@@ -18,15 +18,32 @@
   </style>
 </head>
 <body>
-  <h1>ToEatList</h1>
-  <div id="map"></div>
-  <h2>餐廳清單</h2>
-  <ul id="restaurant-list">
-    <!-- 餐廳列表會在這裡顯示 -->
-  </ul>
+    <h1>ToEatList</h1>
+  
+    <!-- 搜尋餐廳的輸入框 -->
+    <div>
+      <label for="restaurant-search">店名搜尋：</label>
+      <input type="text" id="restaurant-search" placeholder="輸入餐廳名稱" />
+      <button onclick="searchRestaurant()">搜尋</button>
+    </div>
+  
+    <br>
 
-  <!-- 加載 Google Maps API -->
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpP8c2OG0753l41i26x35s_JepFAtMrM0&callback=initMap" defer></script> -->
+    <!-- 顯示搜尋結果 -->
+    <div id="search-results"></div>
+
+    <br>
+  
+    <!-- 地圖 -->
+    <div id="map"></div>
+
+    <br>
+  
+    <h2>待吃清單</h2>
+    <ul id="restaurant-list">
+      <!-- 餐廳列表會在這裡顯示 -->
+    </ul>
+
   <script src="script.js"></script>
 </body>
 </html>
