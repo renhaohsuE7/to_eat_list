@@ -20,7 +20,9 @@
 
 ## 後端API說明
 
-此Repo的開發會盡可能的符合以下概念
+![APIs](./assets/image.png)
+
+此Repo盡可能的符合以下概念
 
 #### 遵守Restful api形式 
 - [x] 已實作必要的CRUD們
@@ -39,10 +41,6 @@
 - [ ] test: 
     尚未實作 
 
-
-![APIs](./assets/image.png)
-
-> 註: 使用了google的第三方服務google map，為求開發上的便利而拆分出來
 
 ### 簡易效果顯示(前端)
 ![alt text](./assets/image-2.png)
