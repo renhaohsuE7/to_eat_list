@@ -1,6 +1,11 @@
 # 目前使用的 sqlite db檔案
 toeatlist.db
 
+# 金鑰們
+.env
+
+
+# 以下是github給的範例
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
