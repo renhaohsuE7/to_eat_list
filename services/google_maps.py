@@ -2,8 +2,6 @@ import googlemaps
 from typing import List, Dict
 from config import settings
 
-API_KEY = "AIzaSyCpP8c2OG0753l41i26x35s_JepFAtMrM0"
-
 gmaps = googlemaps.Client(key=settings.google_maps_api_key)
 
 # 使用 Google Maps API 搜尋附近的餐廳 並以中文回傳結果
