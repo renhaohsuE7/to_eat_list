@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import restaurants
+from routers import restaurants, googlemaps_router  
 from database import init_db
 from contextlib import asynccontextmanager
 
@@ -25,6 +25,7 @@ app.add_middleware(
 
 # 載入 API 路由
 app.include_router(restaurants.router, prefix="/restaurants", tags=["Restaurants"])
+app.include_router(googlemaps_router.router, prefix="/googlemaps_router", tags=["Google Maps"])
 
 # 啟動服務
 if __name__ == "__main__":

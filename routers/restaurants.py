@@ -66,21 +66,7 @@ def restaurant_details(place_id: str):
 
 # 新增餐廳到 ToEatList
 @router.post("/add")
-# def add_restaurant(name: str, address: str, session: Session = Depends(get_session)):
 def add_restaurant(place_id: str, session: Session = Depends(get_session)):
-    # new_restaurant = Restaurant(
-    #     name=name,
-    #     address=address,
-    #     visited=False
-    # )
-    # session.add(new_restaurant)
-    # session.commit()
-    # session.refresh(new_restaurant)
-    
-    # return {"message": "餐廳已加入", "restaurant": new_restaurant}
-
-    # 使用google maps取得餐廳地址
-
     # 使用 place_id 透過 Google Maps API 查詢餐廳詳細資料
     details = restaurant_details(place_id)
     if "error" in details:
@@ -91,10 +77,17 @@ def add_restaurant(place_id: str, session: Session = Depends(get_session)):
     if existing_restaurant:
         raise HTTPException(status_code=400, detail="餐廳已存在於清單中")
 
+    # 確保經緯度資料存在
+    if "latitude" not in details or "longitude" not in details:
+        raise HTTPException(status_code=400, detail="餐廳缺少經緯度資訊")
+
     # 新增餐廳
     new_restaurant = Restaurant(
         name=details["name"],
         address=details["address"],
+        latitude=details["latitude"],  # 緯度
+        longitude=details["longitude"],  # 經度
+        place_id=place_id,
         visited=False  # 預設狀態為尚未吃過
     )
 
@@ -102,6 +95,7 @@ def add_restaurant(place_id: str, session: Session = Depends(get_session)):
     session.commit()
 
     return {"message": "餐廳已成功加入", "restaurant": details}
+
 
 
 # 根據 ID 查詢餐廳

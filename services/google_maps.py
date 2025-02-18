@@ -27,16 +27,22 @@ def get_place_details(place_id: str) -> Dict:
     else:
         return {"error": "無法獲取餐廳詳細資訊"}
 
-# 綜合查詢餐廳的基本資訊，包含名稱和地址
+# 綜合查詢餐廳的基本資訊，包含: 名稱, 地址, 經度, 緯度, place_id, (以後增加菜單或最新評論等等)
 def get_restaurant_info(place_id: str) -> Dict:
     details = get_place_details(place_id)
+    
     if "result" in details:
+        result = details["result"]
+        
         return {
-            "name": details["result"]["name"],
-            "address": details["result"]["formatted_address"]
+            "name": result["name"],
+            "address": result["formatted_address"],
+            "latitude": result["geometry"]["location"]["lat"],  # 新增經度
+            "longitude": result["geometry"]["location"]["lng"],  # 新增緯度
+            "place_id": place_id  # 直接使用傳入的 place_id
         }
-    else:
-        return {"error": "餐廳資訊無效"}
+    
+    return {"error": "餐廳資訊無效"}
 
 # 使用 Google Maps API 以店名搜尋餐廳
 def find_place_by_name(query: str) -> Dict:
